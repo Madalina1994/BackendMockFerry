@@ -25,7 +25,7 @@ public class MockTest {
         
         //tests the updateReservation method
         dummyCustomerBackend.updateReservation( reservationIdentifier, departureId, 4, 0, true );
-        System.out.println( dummyCustomerBackend.getReservation( reservationIdentifier ).getNumberOfPeople() );
+        System.out.println( dummyCustomerBackend.getReservation( reservationIdentifier ).getNumberOfResidents());
         
         //tests the deleteReservation method
         System.out.println( "Initially, the list size is " 

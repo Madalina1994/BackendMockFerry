@@ -101,15 +101,15 @@ public class DummyCustomerBackend implements CustomerInterface { //should implem
             DepartureIdentifier departureIdentifier, int passengersNb, int numberOfResidents, boolean car ) {
         Date departureDate = new Date();
         for ( Long l : reservationDetailListManagement.getReservationDetails().keySet() ) {
-            if ( Math.toIntExact( 1 ) == reservationIdentifier.getId() ) {
+            if ( Math.toIntExact( l ) == reservationIdentifier.getId() ) {
                 return reservationDetailListManagement.getReservationDetails().replace(
                         l, new ReservationDetail( departureDate,
                                                   reservationDetailListManagement.getReservationDetails().get( l ).getDepartureSummary(),
                                                   "new customer", reservationDetailListManagement.getReservationDetails().get( l ).getDepartureSummary(),
-                                                  passengersNb, reservationDetailListManagement.getReservationDetails().get( l ).getNumberOfResidents(),
+                                                  passengersNb, numberOfResidents,
                                                   reservationDetailListManagement.getReservationDetails().get( l ).getNumberOfCars(),
                                                   reservationDetailListManagement.getReservationDetails().get( l ).getNumberOfLorries(), 40,
-                                                  200,
+                                                  50 * passengersNb + 25 * numberOfResidents,
                                                   reservationIdentifier.getId() ) );
             }
         }
