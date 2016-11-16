@@ -18,6 +18,6 @@ public class ReservationDetailListManagement {
     }
 
     public static long getNextIdReservationDetail() {
-        return nextIdreservationDetail++;
+        return ++nextIdreservationDetail;
     }
 }

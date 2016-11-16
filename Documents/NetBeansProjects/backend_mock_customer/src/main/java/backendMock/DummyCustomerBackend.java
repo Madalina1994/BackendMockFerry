@@ -105,7 +105,7 @@ public class DummyCustomerBackend implements CustomerInterface { //should implem
                 return reservationDetailListManagement.getReservationDetails().replace(
                         l, new ReservationDetail( departureDate,
                                                   reservationDetailListManagement.getReservationDetails().get( l ).getDepartureSummary(),
-                                                  "new customer", reservationDetailListManagement.getReservationDetails().get( l ).getDepartureSummary(),
+                                                  "edited customer", reservationDetailListManagement.getReservationDetails().get( l ).getDepartureSummary(),
                                                   passengersNb, numberOfResidents,
                                                   reservationDetailListManagement.getReservationDetails().get( l ).getNumberOfCars(),
                                                   reservationDetailListManagement.getReservationDetails().get( l ).getNumberOfLorries(), 40,
@@ -113,7 +113,7 @@ public class DummyCustomerBackend implements CustomerInterface { //should implem
                                                   reservationIdentifier.getId() ) );
             }
         }
-        return null;
+        return new ReservationDetail( null, null, "not changed", null, 0, 0, 0, 0, 0, 0, 0 );
     }
 
     @Override
