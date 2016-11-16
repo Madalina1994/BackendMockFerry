@@ -22,7 +22,9 @@ public class DummyCustomerBackend implements CustomerInterface { //should implem
     FerryDetailListManagement ferryDetailListManagement;
     LineSummaryListManagement lineSummarylListManagement;
     ReservationDetailListManagement reservationDetailListManagement;
+    ReservationSummaryListManagement reservationSummaryListManagement;
     ReservationDetail dummyReservationDetail;
+    ReservationSummary dummyReservationSummary;
     private static Map<Long, DepartureDetail> departuresForLineAndDate;
     private static Map<Long, DepartureDetail> departuresForLineAndDateGeneralStuff;//needed just to return the same type as in the interface
 
@@ -48,6 +50,8 @@ public class DummyCustomerBackend implements CustomerInterface { //should implem
                                                         "Patrick Huston", departureSummary, 4, 0, 1, 0, 0, 80,
                                                         Math.toIntExact( reservationDetailListManagement.getNextIdReservationDetail() ) );
         reservationDetailListManagement.addReservationDetail( dummyReservationDetail );
+        dummyReservationSummary = new ReservationSummary( 40.0, 1 );
+        reservationSummaryListManagement.addReservationSummary( dummyReservationSummary );
     }
 
     //to fix
@@ -102,7 +106,7 @@ public class DummyCustomerBackend implements CustomerInterface { //should implem
         Date departureDate = new Date();
         for ( Long l : reservationDetailListManagement.getReservationDetails().keySet() ) {
             if ( Math.toIntExact( l ) == reservationIdentifier.getId() ) {
-                return reservationDetailListManagement.getReservationDetails().replace(
+                reservationDetailListManagement.getReservationDetails().replace(
                         l, new ReservationDetail( departureDate,
                                                   reservationDetailListManagement.getReservationDetails().get( l ).getDepartureSummary(),
                                                   "edited customer", reservationDetailListManagement.getReservationDetails().get( l ).getDepartureSummary(),
@@ -111,9 +115,10 @@ public class DummyCustomerBackend implements CustomerInterface { //should implem
                                                   reservationDetailListManagement.getReservationDetails().get( l ).getNumberOfLorries(), 40,
                                                   50 * passengersNb + 25 * numberOfResidents,
                                                   reservationIdentifier.getId() ) );
+                return reservationSummaryListManagement.getReservationSummaries().get( l );
             }
         }
-        return new ReservationDetail( null, null, "not changed", null, 0, 0, 0, 0, 0, 0, 0 );
+        return null;
     }
 
     @Override
