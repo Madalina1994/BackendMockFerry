@@ -3,6 +3,9 @@ package backendMock;
 import backendMock.DummyCustomerBackend;
 import generalstuff.DepartureIdentifier;
 import generalstuff.FerryIdentifier;
+import generalstuff.LineDetail;
+import generalstuff.LineIdentifier;
+import generalstuff.LineSummary;
 import generalstuff.ReservationIdentifier;
 import java.util.Date;
 import utilities.DepartureDetailListManagement;
@@ -18,6 +21,7 @@ public class MockTest {
     private static ReservationIdentifier reservationIdentifier = new ReservationIdentifier( 1 );
     private static ReservationIdentifier reservationIdentifier2 = new ReservationIdentifier( 2 );
     private static LineSummaryListManagement linesList = new LineSummaryListManagement();
+    private static LineSummary lineSummary = linesList.getLineSummaries().get( Long.valueOf( "1" ) );
     private static DepartureDetailListManagement departureDetailListManagement = new DepartureDetailListManagement();
 
     public static void main( String[] args ) {
@@ -27,7 +31,7 @@ public class MockTest {
 //        //tests the saveReservation method
         dummyCustomerBackend.saveReservation( null, 14, 14, true, 1, 0 );
         System.out.println( dummyCustomerBackend.getReservation( reservationIdentifier2 ).getNumberOfPeople() );
-//
+
         System.out.println( "Departures keyset: " + departureDetailListManagement.getDepartures().keySet() );
 
 //        //tests the updateReservation method
@@ -36,6 +40,9 @@ public class MockTest {
         dummyCustomerBackend.updateReservation( reservationIdentifier, departureId2, 4, 0, true );
         System.out.println( dummyCustomerBackend.getReservation( reservationIdentifier ).getDepartureSummary().getLineSummary().getDeparturePort() );
         System.out.println( dummyCustomerBackend.getReservation( reservationIdentifier ).getDepartureSummary().getLineSummary().getDestinationPort() );
+
+        System.out.println( "" + dummyCustomerBackend.getDepartures( new LineIdentifier( lineSummary.getId() ), new Date() ) );
+
 //        //tests the deleteReservation method
 //        System.out.println( "Initially, the list size is "
 //                + reservationDetailListManagement.getReservationDetails().size() );

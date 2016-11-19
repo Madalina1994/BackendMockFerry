@@ -6,8 +6,14 @@ import java.util.Date;
 import java.util.HashMap;
 import interfaces.*;
 import generalstuff.*;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 import utilities.*;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DummyCustomerBackend implements CustomerInterface { //should implement the interface from the contract
 
@@ -35,20 +41,27 @@ public class DummyCustomerBackend implements CustomerInterface { //should implem
         lineSummarylListManagement = new LineSummaryListManagement();
         reservationDetailListManagement = new ReservationDetailListManagement();
         reservationSummaryListManagement = new ReservationSummaryListManagement();
-        lineDetail = new LineDetail( "A", "B", 1, "1" );
-        lineSummary = new LineSummary( "A", "B", 1, "1" );
+        lineDetail = new LineDetail( "B", "A", 1, "1" );
+        lineSummary = new LineSummary( "B", "A", 1, "1" );
         lineDetail2 = new LineDetail( "Malmo", "Copenhagen", 1, "1" );
         lineSummary2 = new LineSummary( "Malmo", "Copenhagen", 1, "1" );
         lineSummarylListManagement.addLineSummary( lineSummary );
         lineSummarylListManagement.addLineSummary( lineSummary2 );
         reservationDetail = new ReservationDetail( null, null, "", null, 0, 0, 0, 0, 0, 0.0, 0 );
-        departureDate = new Date();
+        DateFormat format = new SimpleDateFormat( "EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH );
+        Date departureDate= null, departureDate2= null;
+        try {
+            departureDate = format.parse( "Sun Nov 20 00:23:39 CET 2016" );
+            departureDate2 = format.parse( "Sun Nov 20 00:10:39 CET 2016" );
+        } catch ( ParseException ex ) {
+            Logger.getLogger( DummyCustomerBackend.class.getName() ).log( Level.SEVERE, null, ex );
+        }
         departureSummary = new DepartureSummary( departureDate, lineDetail, null, 0 );
-        departureSummary2 = new DepartureSummary( departureDate, lineDetail2, null, 0 );
+        departureSummary2 = new DepartureSummary( departureDate2, lineDetail2, null, 0 );
         departuresForLineAndDate = new HashMap<>();
         departuresForLineAndDateGeneralStuff = new HashMap<>();
         departureDetail = new DepartureDetail( 50, 100, 120, 150, 10, 100, 20, 1, 1, departureDate, lineSummary, null, 1 );
-        departureDetail2 = new DepartureDetail( 50, 100, 120, 150, 10, 100, 20, 1, 1, departureDate, lineSummary2, null, 1 );
+        departureDetail2 = new DepartureDetail( 50, 100, 120, 150, 10, 100, 20, 1, 1, departureDate2, lineSummary2, null, 1 );
         departureDetailListManagement.getDepartures().put(
                 departureDetailListManagement.getNextIdDeparture(), departureDetail );
         departureDetailListManagement.getDepartures().put(
