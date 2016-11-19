@@ -10,14 +10,14 @@ public class LineSummaryListManagement {
     private static long nextIdLineSummary = 0;
 
     public void addLineSummary( LineSummary lineSummary ) {
-        lineSummaryMap.put( nextIdLineSummary, lineSummary );
+        lineSummaryMap.put( ++nextIdLineSummary, lineSummary );
     }
 
     public Map<Long, LineSummary> getLineSummaries() {
         return lineSummaryMap;
     }
 
-    public static long getNextIdLineSummary() {
-        return nextIdLineSummary++;
-    }
+//    public static long getNextIdLineSummary() {
+//        return nextIdLineSummary++;
+//    }
 }
