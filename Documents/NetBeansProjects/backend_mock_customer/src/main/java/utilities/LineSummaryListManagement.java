@@ -16,8 +16,4 @@ public class LineSummaryListManagement {
     public Map<Long, LineSummary> getLineSummaries() {
         return lineSummaryMap;
     }
-
-//    public static long getNextIdLineSummary() {
-//        return nextIdLineSummary++;
-//    }
 }
