@@ -49,7 +49,7 @@ public class DummyCustomerBackend implements CustomerInterface { //should implem
         lineSummarylListManagement.addLineSummary( lineSummary2 );
         reservationDetail = new ReservationDetail( null, null, "", null, 0, 0, 0, 0, 0, 0.0, 0 );
         DateFormat format = new SimpleDateFormat( "EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH );
-        Date departureDate= null, departureDate2= null;
+        Date departureDate = null, departureDate2 = null;
         try {
             departureDate = format.parse( "Sun Nov 20 00:23:39 CET 2016" );
             departureDate2 = format.parse( "Sun Nov 20 00:10:39 CET 2016" );
@@ -62,10 +62,8 @@ public class DummyCustomerBackend implements CustomerInterface { //should implem
         departuresForLineAndDateGeneralStuff = new HashMap<>();
         departureDetail = new DepartureDetail( 50, 100, 120, 150, 10, 100, 20, 1, 1, departureDate, lineSummary, null, 1 );
         departureDetail2 = new DepartureDetail( 50, 100, 120, 150, 10, 100, 20, 1, 1, departureDate2, lineSummary2, null, 1 );
-        departureDetailListManagement.getDepartures().put(
-                departureDetailListManagement.getNextIdDeparture(), departureDetail );
-        departureDetailListManagement.getDepartures().put(
-                departureDetailListManagement.getNextIdDeparture(), departureDetail2 );
+        departureDetailListManagement.addDeparture( departureDetail );
+        departureDetailListManagement.addDeparture( departureDetail2 );
         dummyReservationDetail = new ReservationDetail( departureDate, departureSummary,
                                                         "Patrick Huston", departureSummary, 4, 0, 1, 0, 0, 80,
                                                         Math.toIntExact( reservationDetailListManagement.getNextIdReservationDetail() ) );
@@ -74,7 +72,6 @@ public class DummyCustomerBackend implements CustomerInterface { //should implem
         reservationSummaryListManagement.addReservationSummary( dummyReservationSummary );
     }
 
-    //to fix
     @Override
     public Collection<LineSummary> getLines() {
         return lineSummarylListManagement.getLineSummaries().values();
@@ -83,14 +80,10 @@ public class DummyCustomerBackend implements CustomerInterface { //should implem
     //finds the departures for a specific line and date (Note: the time is not taken into consideration!)
     @Override
     public Collection<DepartureDetail> getDepartures( LineIdentifier lineIdentifier, Date departureDate ) {
-        Calendar calendardepartureDate = Calendar.getInstance();
-        calendardepartureDate.setTime( departureDate );
-        Calendar calendar = Calendar.getInstance();
-        int departureDateDay = calendardepartureDate.get( Calendar.DAY_OF_YEAR );
         for ( DepartureDetail departure : departureDetailListManagement.getDepartures().values() ) {
-            calendar.setTime( departure.getDepartureTime() );
-            if ( departure.getLineSummary().getId().equals( lineIdentifier )
-                    && departureDateDay == calendar.get( Calendar.DAY_OF_YEAR ) ) {
+            if ( departure.getLineSummary().getId().equals( lineIdentifier.getId() )
+                    && !departure.getDepartureTime().after( departureDate ) 
+                    && !departure.getDepartureTime().before( departureDate ) ) {
                 departuresForLineAndDate.put( departure.getId(), departure );
             }
         }
@@ -123,7 +116,7 @@ public class DummyCustomerBackend implements CustomerInterface { //should implem
     @Override
     public ReservationSummary updateReservation( ReservationIdentifier reservationIdentifier,
             DepartureIdentifier departureIdentifier, int passengersNb, int numberOfResidents, boolean car ) {
-        Date departureDate = new Date();
+        Date departureDate = null;
 //        String departurePort = "";
 //        String destinationPort = "";
 //        LineSummary lineSummary = null;
@@ -134,6 +127,7 @@ public class DummyCustomerBackend implements CustomerInterface { //should implem
 //                lineSummary = departureDetailListManagement.getDepartures().get( l ).getLineSummary();
 //                departurePort = lineSummary.getDeparturePort();
 //                destinationPort= lineSummary.getDestinationPort();
+                departureDate = departureDetailListManagement.getDepartures().get( l ).getDepartureTime();
                 depSummary = departureDetailListManagement.getDepartures().get( l );
             }
         }
