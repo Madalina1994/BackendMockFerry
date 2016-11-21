@@ -9,6 +9,8 @@ import generalstuff.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import utilities.*;
 import java.util.Map;
@@ -31,8 +33,10 @@ public class DummyCustomerBackend implements CustomerInterface { //should implem
     ReservationSummaryListManagement reservationSummaryListManagement;
     ReservationDetail dummyReservationDetail;
     ReservationSummary dummyReservationSummary;
+    FerrySummary ferrySummary;
     private static Map<Long, DepartureDetail> departuresForLineAndDate;
     private static Map<Long, DepartureDetail> departuresForLineAndDateGeneralStuff;//needed just to return the same type as in the interface
+    private static List<LineIdentifier> lineIdentifierList;
 
     public DummyCustomerBackend() {
         departureDetailListManagement = new DepartureDetailListManagement();
@@ -43,8 +47,14 @@ public class DummyCustomerBackend implements CustomerInterface { //should implem
         reservationSummaryListManagement = new ReservationSummaryListManagement();
         lineDetail = new LineDetail( "B", "A", 1, "1" );
         lineSummary = new LineSummary( "B", "A", 1, "1" );
-        lineDetail2 = new LineDetail( "Malmo", "Copenhagen", 1, "1" );
-        lineSummary2 = new LineSummary( "Malmo", "Copenhagen", 1, "1" );
+        lineDetail2 = new LineDetail( "Malmo", "Copenhagen", 1, "2" );
+        lineSummary2 = new LineSummary( "Malmo", "Copenhagen", 1, "2" );
+        LineIdentifier lineIdentifier = new LineIdentifier( lineSummary.getId() );
+        LineIdentifier lineIdentifier2 = new LineIdentifier( lineSummary2.getId() );
+        lineIdentifierList= new ArrayList();
+        lineIdentifierList.add( lineIdentifier );
+        lineIdentifierList.add( lineIdentifier2 );
+        ferrySummary = new FerryDetail( 80, 20, 4, "small", "ferry1", lineIdentifierList, "1" );
         lineSummarylListManagement.addLineSummary( lineSummary );
         lineSummarylListManagement.addLineSummary( lineSummary2 );
         reservationDetail = new ReservationDetail( null, null, "", null, 0, 0, 0, 0, 0, 0.0, 0 );
@@ -56,7 +66,7 @@ public class DummyCustomerBackend implements CustomerInterface { //should implem
         } catch ( ParseException ex ) {
             Logger.getLogger( DummyCustomerBackend.class.getName() ).log( Level.SEVERE, null, ex );
         }
-        departureSummary = new DepartureSummary( departureDate, lineDetail, null, 0 );
+        departureSummary = new DepartureSummary( departureDate, lineDetail, ferrySummary, 0 );
         departureSummary2 = new DepartureSummary( departureDate2, lineDetail2, null, 0 );
         departuresForLineAndDate = new HashMap<>();
         departuresForLineAndDateGeneralStuff = new HashMap<>();
@@ -82,7 +92,7 @@ public class DummyCustomerBackend implements CustomerInterface { //should implem
     public Collection<DepartureDetail> getDepartures( LineIdentifier lineIdentifier, Date departureDate ) {
         for ( DepartureDetail departure : departureDetailListManagement.getDepartures().values() ) {
             if ( departure.getLineSummary().getId().equals( lineIdentifier.getId() )
-                    && !departure.getDepartureTime().after( departureDate ) 
+                    && !departure.getDepartureTime().after( departureDate )
                     && !departure.getDepartureTime().before( departureDate ) ) {
                 departuresForLineAndDate.put( departure.getId(), departure );
             }
