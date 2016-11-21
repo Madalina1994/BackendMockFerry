@@ -109,39 +109,6 @@ public class DummyBackendTest {
     public void seeReservationTest() {
         ReservationDetail reservationDetail = dummyCustomerBackend.getReservation( reservationIdentifier );
         assertThat( reservationDetail, matches( expectedReservationDetail ) );
-//        assertEquals( reservationDetail.getCustomerName(), reservationDetail.getCustomerName());
-//        assertThat(reservationDetail.getDepartureSummary(), matches(departureSummary));
-//        assertEquals( reservationDetail.getNumberOfCars(), reservationDetail.getNumberOfCars());
-//        assertEquals( reservationDetail.getNumberOfHeavyMachinery(), reservationDetail.getNumberOfHeavyMachinery());
+       
     }
-
-    /*    @Test
-     public void compareDepartureSummariesTest() {
-     LineIdentifier li1 = new LineIdentifier( "1" );
-     LineIdentifier li2 = new LineIdentifier( "1" );
-     List<LineIdentifier> supportedLines = new ArrayList();
-     FerrySummary fs1 = new FerrySummary( "newFerry", linesIdList, "3" );
-     FerrySummary fs2 = new FerrySummary( "newFerry", linesIdList, "3" );
-     Date now = new Date();
-     DepartureSummary departureSummary1 = new DepartureSummary( now, lineSummary, fs1, 3 );
-     DepartureSummary departureSummary2 = new DepartureSummary( now, lineSummary, fs1, 3 );
-     assertThat( departureSummary1, matches( departureSummary2 ) );
-     }
-
-     @Test
-     public void compareFerrySummariesTest() {
-     LineIdentifier li1 = new LineIdentifier( "1" );
-     LineIdentifier li2 = new LineIdentifier( "1" );
-     List<LineIdentifier> supportedLines = new ArrayList();
-     FerrySummary fs1 = new FerrySummary( "newFerry", linesIdList, "3" );
-     FerrySummary fs2 = new FerrySummary( "newFerry", linesIdList, "3" );
-     assertThat( fs1, matches( fs2 ) );
-     }
-
-     @Test
-     public void compareLinesTest() {
-     LineIdentifier li1 = new LineIdentifier( "1" );
-     LineIdentifier li2 = new LineIdentifier( "1" );
-     assertThat( li1, matches( li2 ) );
-     } */
 }
