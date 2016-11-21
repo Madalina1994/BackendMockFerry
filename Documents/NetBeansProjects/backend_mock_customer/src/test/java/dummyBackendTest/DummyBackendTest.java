@@ -65,8 +65,8 @@ public class DummyBackendTest {
     public static void setUpClass() {
         dummyCustomerBackend = new DummyCustomerBackend();
         reservationDetailListManagement = new ReservationDetailListManagement();
-        departureId = new DepartureIdentifier( 0 );
-        departureId2 = new DepartureIdentifier( 1 );
+        departureId = new DepartureIdentifier( 1 );
+        departureId2 = new DepartureIdentifier( 2 );
         reservationIdentifier = new ReservationIdentifier( 1 );
         reservationIdentifier2 = new ReservationIdentifier( 2 );
         linesList = new LineSummaryListManagement();

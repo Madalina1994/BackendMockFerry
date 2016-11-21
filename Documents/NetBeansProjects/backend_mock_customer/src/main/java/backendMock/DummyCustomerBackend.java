@@ -117,10 +117,8 @@ public class DummyCustomerBackend implements CustomerInterface { //should implem
         if ( car == true ) {
             carsNumber = 1;
         }
-        DepartureSummary depSummary= departureDetailListManagement.getDepartures().get( departureIdentifier.getId());
-
-        
-        ReservationDetail newReservationDetail = new ReservationDetail( departureDate, depSummary,
+        DepartureSummary depSummary= departureDetailListManagement.getDepartures().get( departureIdentifier.getId()); 
+        ReservationDetail newReservationDetail = new ReservationDetail( depSummary.getDepartureTime(), depSummary,
                                                                         "Mark Johnson", depSummary,
                                                                         passengersNb, numberOfResidents, carsNumber, numberOfLorries, numberOfHeavyMachinery, 100, Math.toIntExact(
                                                                                 reservationDetailListManagement.getNextIdReservationDetail() ) );
