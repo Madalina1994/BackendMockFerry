@@ -156,7 +156,7 @@ public class DummyCustomerBackend implements CustomerInterface { //should implem
                                                   reservationDetailListManagement.getReservationDetails().get( l ).getNumberOfLorries(), 40,
                                                   50 * passengersNb + 25 * numberOfResidents,
                                                   reservationIdentifier.getId() ) );
-                return reservationSummaryListManagement.getReservationSummaries().get( l );
+                return reservationDetailListManagement.getReservationDetails().get( l );
             }
         }
         return null;

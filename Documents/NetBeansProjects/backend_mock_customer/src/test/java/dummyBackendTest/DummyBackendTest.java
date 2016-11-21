@@ -122,6 +122,14 @@ public class DummyBackendTest {
         assertThat( newReservationDetail, matches( expectedNewReservationDetail ) );
     }
 
+    @Test( expected = AssertionError.class )
+    public void updateReservation() {
+        ReservationDetail initialReservation = dummyCustomerBackend.getReservation( reservationIdentifier );
+        ReservationDetail editedReservationSummary = ( ReservationDetail ) dummyCustomerBackend.updateReservation(
+                reservationIdentifier, departureId2, 20, 0, true );
+        assertThat( editedReservationSummary, matches( initialReservation ) );
+    }
+
     @Test
     public void deleteReservationTest() {
         dummyCustomerBackend.deleteReservation( reservationIdentifier );
