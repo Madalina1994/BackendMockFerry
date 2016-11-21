@@ -33,7 +33,10 @@ import java.util.logging.Logger;
 import static matchers.ObjectMatchers.matches;
 import static org.hamcrest.CoreMatchers.is;
 import static matchers.ObjectMatchers.matches;
+import org.junit.FixMethodOrder;
+import org.junit.runners.MethodSorters;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class DummyBackendTest {
 
     private static DummyCustomerBackend dummyCustomerBackend;
@@ -111,19 +114,19 @@ public class DummyBackendTest {
     }
 
     @Test
-    public void seeReservationTest() {
+    public void aseeReservationTest() {
         ReservationDetail reservationDetail = dummyCustomerBackend.getReservation( reservationIdentifier );
         assertThat( reservationDetail, matches( expectedReservationDetail ) );
     }
 
     @Test
-    public void saveReservationTest() {
+    public void createReservationTest() {
         ReservationDetail newReservationDetail = ( ReservationDetail ) dummyCustomerBackend.saveReservation( departureId, 14, 14, true, 1, 0 );
         assertThat( newReservationDetail, matches( expectedNewReservationDetail ) );
     }
 
     @Test( expected = AssertionError.class )
-    public void updateReservation() {
+    public void editReservation() {
         ReservationDetail initialReservation = dummyCustomerBackend.getReservation( reservationIdentifier );
         ReservationDetail editedReservationSummary = ( ReservationDetail ) dummyCustomerBackend.updateReservation(
                 reservationIdentifier, departureId2, 20, 0, true );
@@ -131,7 +134,7 @@ public class DummyBackendTest {
     }
 
     @Test
-    public void deleteReservationTest() {
+    public void removeReservationTest() {
         dummyCustomerBackend.deleteReservation( reservationIdentifier );
         assertEquals( dummyCustomerBackend.getReservation( reservationIdentifier ), null );
     }
