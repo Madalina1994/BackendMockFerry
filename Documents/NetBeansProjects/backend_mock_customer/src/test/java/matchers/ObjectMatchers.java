@@ -25,9 +25,9 @@ public class ObjectMatchers {
                     type = "DepartureSummary";
                     if ( (expectedDepartureSummary.getId() == matcherDepartureSummary.getId())
                             && (expectedDepartureSummary.getDepartureTime().equals( matcherDepartureSummary.getDepartureTime() ))
-                            && (expectedDepartureSummary.getFerrySummary().getId().equals( matcherDepartureSummary.getFerrySummary().getId() ) // to use matches
-                            && (expectedDepartureSummary.getLineSummary().getId().equals( matcherDepartureSummary.getLineSummary().getId() ))) ) { //to use matchers
-                        areMatching = true;
+                            && (expectedDepartureSummary.getFerrySummary().getId().equals( matcherDepartureSummary.getFerrySummary().getId() )) // to use matchers
+                            && (expectedDepartureSummary.getLineSummary().getId().equals( matcherDepartureSummary.getLineSummary().getId() ))) { //to use matchers                     
+                            areMatching = true;
                     }
                 }
                 if ( theExpected instanceof FerrySummary && o instanceof FerrySummary ) {
@@ -45,9 +45,6 @@ public class ObjectMatchers {
                     LineIdentifier expectedLineIdentifier = ( LineIdentifier ) theExpected;
                     LineIdentifier matcherLineIdentifier = ( LineIdentifier ) o;
                     type = "LineIdentifier";
-                    System.out.println( "Lalalala" );
-                    System.out.println( expectedLineIdentifier.getId() );
-                    System.out.println( matcherLineIdentifier.getId() );
                     if ( expectedLineIdentifier.getId().equals( matcherLineIdentifier.getId() ) ) {
                         areMatching = true;
                     }

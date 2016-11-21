@@ -54,7 +54,7 @@ public class DummyCustomerBackend implements CustomerInterface { //should implem
         lineIdentifierList= new ArrayList();
         lineIdentifierList.add( lineIdentifier );
         lineIdentifierList.add( lineIdentifier2 );
-        ferrySummary = new FerryDetail( 80, 20, 4, "small", "ferry1", lineIdentifierList, "1" );
+        ferrySummary = new FerrySummary("ferry1", lineIdentifierList, "1" );
         lineSummarylListManagement.addLineSummary( lineSummary );
         lineSummarylListManagement.addLineSummary( lineSummary2 );
         reservationDetail = new ReservationDetail( null, null, "", null, 0, 0, 0, 0, 0, 0.0, 0 );
