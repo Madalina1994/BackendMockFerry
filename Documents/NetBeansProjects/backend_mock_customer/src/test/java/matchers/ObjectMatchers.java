@@ -39,25 +39,6 @@ public class ObjectMatchers {
                         return true;
                     }
                 }
-//                if ( theExpected instanceof FerrySummary && o instanceof FerrySummary ) {
-//                    FerrySummary expectedFerrySummary = ( FerrySummary ) theExpected;
-//                    FerrySummary matcherFerrySummary = ( FerrySummary ) o;
-//                    type = "FerrySummary";
-//                    if ( (expectedFerrySummary.getId() == matcherFerrySummary.getId())
-//                            && (expectedFerrySummary.getName().equals( matcherFerrySummary.getName() ))
-//                            && (expectedFerrySummary.getSupportedLines().equals( matcherFerrySummary.getSupportedLines() )) );
-//                    {
-//                        areMatching = true;
-//                    }
-//                }
-//                if ( theExpected instanceof LineIdentifier && o instanceof LineIdentifier ) {
-//                    LineIdentifier expectedLineIdentifier = ( LineIdentifier ) theExpected;
-//                    LineIdentifier matcherLineIdentifier = ( LineIdentifier ) o;
-//                    type = "LineIdentifier";
-//                    if ( expectedLineIdentifier.getId().equals( matcherLineIdentifier.getId() ) ) {
-//                        areMatching = true;
-//                    }
-//                }
                 return false;
             }
 
