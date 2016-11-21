@@ -1,6 +1,5 @@
 package backendMock;
 
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -19,7 +18,7 @@ import java.util.logging.Logger;
 
 public class DummyCustomerBackend implements CustomerInterface { //should implement the interface from the contract
 
-    private DepartureDetail departureDetail, departureDetail2;
+    public DepartureDetail departureDetail, departureDetail2;
     private LineDetail lineDetail, lineDetail2;
     private LineSummary lineSummary, lineSummary2;
     ReservationDetail reservationDetail;
@@ -31,7 +30,7 @@ public class DummyCustomerBackend implements CustomerInterface { //should implem
     LineSummaryListManagement lineSummarylListManagement;
     ReservationDetailListManagement reservationDetailListManagement;
     ReservationSummaryListManagement reservationSummaryListManagement;
-    ReservationDetail dummyReservationDetail;
+    public ReservationDetail dummyReservationDetail;
     ReservationSummary dummyReservationSummary;
     FerrySummary ferrySummary;
     private static Map<Long, DepartureDetail> departuresForLineAndDate;
@@ -76,7 +75,7 @@ public class DummyCustomerBackend implements CustomerInterface { //should implem
         departureDetailListManagement.addDeparture( departureDetail2 );
         dummyReservationDetail = new ReservationDetail( departureDate, departureSummary,
                                                         "Patrick Huston", departureSummary, 4, 0, 1, 0, 0, 80,
-                                                        Math.toIntExact( reservationDetailListManagement.getNextIdReservationDetail() ) );
+                                                        Math.toIntExact( ReservationDetailListManagement.getNextIdReservationDetail() ) );
         reservationDetailListManagement.addReservationDetail( dummyReservationDetail );
         dummyReservationSummary = new ReservationSummary( 40.0, 1 );
         reservationSummaryListManagement.addReservationSummary( dummyReservationSummary );
