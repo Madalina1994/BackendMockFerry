@@ -6,6 +6,7 @@ import generalstuff.FerryIdentifier;
 import generalstuff.FerrySummary;
 import generalstuff.LineIdentifier;
 import generalstuff.LineSummary;
+import generalstuff.ReservationDetail;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -21,17 +22,23 @@ public class ObjectMatchers {
             @Override
             public boolean matches( Object o ) {
                 boolean areMatching = false;
-//                if ( theExpected instanceof DepartureSummary && o instanceof DepartureSummary ) {
-//                    DepartureSummary expectedDepartureSummary = ( DepartureSummary ) theExpected;
-//                    DepartureSummary matcherDepartureSummary = ( DepartureSummary ) o;
+                if ( theExpected instanceof ReservationDetail && o instanceof ReservationDetail ) {
+                    ReservationDetail matcherReservationDetail = ( ReservationDetail ) theExpected;
+                    ReservationDetail expectedReservationDetail= ( ReservationDetail ) o;
 //                    type = "DepartureSummary";
-//                    if ( (expectedDepartureSummary.getId() == matcherDepartureSummary.getId())
-//                            && (expectedDepartureSummary.getDepartureTime().equals( matcherDepartureSummary.getDepartureTime() ))
-//                            && (compareFerryIdentifiers( expectedDepartureSummary.getFerrySummary(), matcherDepartureSummary.getFerrySummary() )) // to use matchers
-//                            && (compareLineSummaries( expectedDepartureSummary.getLineSummary(), matcherDepartureSummary.getLineSummary() )) ) { //to use matchers                     
-//                        areMatching = true;
-//                    }
-//                }
+                    if ( (expectedReservationDetail.getCustomerName().equals( matcherReservationDetail.getCustomerName()))
+                            && (compareDepartureSummaries( expectedReservationDetail.getDepartureSummary(), matcherReservationDetail.getDepartureSummary() ))
+                            && (expectedReservationDetail.getNumberOfCars() == matcherReservationDetail.getNumberOfCars())
+                            && (expectedReservationDetail.getNumberOfHeavyMachinery() == matcherReservationDetail.getNumberOfHeavyMachinery())
+                            && (expectedReservationDetail.getNumberOfLorries() == matcherReservationDetail.getNumberOfLorries())
+                            && (expectedReservationDetail.getNumberOfPeople() == matcherReservationDetail.getNumberOfPeople())
+                            && (expectedReservationDetail.getNumberOfResidents() == matcherReservationDetail.getNumberOfResidents())
+                            && (!expectedReservationDetail.getReservationMade().after(matcherReservationDetail.getReservationMade()))
+                            && (!expectedReservationDetail.getReservationMade().before(matcherReservationDetail.getReservationMade()) )
+                            ) {
+                        return true;
+                    }
+                }
 //                if ( theExpected instanceof FerrySummary && o instanceof FerrySummary ) {
 //                    FerrySummary expectedFerrySummary = ( FerrySummary ) theExpected;
 //                    FerrySummary matcherFerrySummary = ( FerrySummary ) o;
@@ -51,7 +58,7 @@ public class ObjectMatchers {
 //                        areMatching = true;
 //                    }
 //                }
-                return compareDepartureSummaries(( DepartureSummary ) theExpected, ( DepartureSummary ) o);
+                return false;
             }
 
             public boolean compareDepartureSummaries( DepartureSummary expectedDepartureSummary, DepartureSummary matcherDepartureSummary ) {
