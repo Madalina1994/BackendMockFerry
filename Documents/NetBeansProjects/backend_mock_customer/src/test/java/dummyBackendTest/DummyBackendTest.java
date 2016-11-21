@@ -49,7 +49,7 @@ public class DummyBackendTest {
     private static LineSummary lineSummary;
     private static DepartureDetailListManagement departureDetailListManagement;
     private static DepartureSummary departureSummary;
-    private static Date departureDate = null;
+    private static Date departureDate;
     private static DateFormat format;
     private static LineDetail lineDetail;
     private static FerrySummary ferrySummary;
@@ -110,7 +110,7 @@ public class DummyBackendTest {
     }
 
     @After
-    public void tearDown() {
+    public void tearDown() {        
     }
 
     @Test
