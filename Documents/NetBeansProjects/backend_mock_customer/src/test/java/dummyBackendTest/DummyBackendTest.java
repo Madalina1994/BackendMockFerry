@@ -39,27 +39,27 @@ import org.junit.runners.MethodSorters;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class DummyBackendTest {
 
-    private static DummyCustomerBackend dummyCustomerBackend;
-    private static ReservationDetailListManagement reservationDetailListManagement;
-    private static DepartureIdentifier departureId;
-    private static DepartureIdentifier departureId2;
-    private static ReservationIdentifier reservationIdentifier;
-    private static ReservationIdentifier reservationIdentifier2;
-    private static LineSummaryListManagement linesList;
-    private static LineSummary lineSummary;
-    private static DepartureDetailListManagement departureDetailListManagement;
-    private static DepartureSummary departureSummary;
-    private static Date departureDate;
-    private static DateFormat format;
-    private static LineDetail lineDetail;
-    private static FerrySummary ferrySummary;
-    private static LineDetail lineDetail1;
-    private static LineDetail lineDetail2;
-    private static LineSummary lineSummary1;
-    private static LineSummary lineSummary2;
-    private static ReservationDetail expectedReservationDetail;
-    private static ReservationDetail expectedNewReservationDetail;
-    private static List<LineIdentifier> linesIdList;
+    private DummyCustomerBackend dummyCustomerBackend;
+    private ReservationDetailListManagement reservationDetailListManagement;
+    private DepartureIdentifier departureId;
+    private DepartureIdentifier departureId2;
+    private ReservationIdentifier reservationIdentifier;
+    private ReservationIdentifier reservationIdentifier2;
+    private LineSummaryListManagement linesList;
+    private LineSummary lineSummary;
+    private DepartureDetailListManagement departureDetailListManagement;
+    private DepartureSummary departureSummary;
+    private Date departureDate;
+    private DateFormat format;
+    private LineDetail lineDetail;
+    private FerrySummary ferrySummary;
+    private LineDetail lineDetail1;
+    private LineDetail lineDetail2;
+    private LineSummary lineSummary1;
+    private LineSummary lineSummary2;
+    private ReservationDetail expectedReservationDetail;
+    private ReservationDetail expectedNewReservationDetail;
+    private List<LineIdentifier> linesIdList;
 
     public DummyBackendTest() {
     }
