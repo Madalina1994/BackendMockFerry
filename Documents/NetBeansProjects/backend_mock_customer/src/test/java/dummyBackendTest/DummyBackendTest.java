@@ -46,7 +46,7 @@ public class DummyBackendTest {
     }
 
     @Test
-    public void createReservationTest() {
+    public void saveReservationTest() {
         ReservationSummary newReservationSummary = dummyCustomerBackend.saveReservation(dummyCustomerBackend.departureDetail, 14, 14, true, 1, 0);
         assertTrue(newReservationSummary instanceof ReservationSummary);
 //        and maybe another assertThat(newReservationSummary, matches(obj));
