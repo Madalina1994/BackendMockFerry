@@ -24,7 +24,7 @@ public class DummyCustomerBackend implements CustomerInterface { //should implem
     private LineSummary lineSummary, lineSummary2;
     ReservationDetail reservationDetail;
     DepartureSummary departureSummary, departureSummary2;
-    Date departureDate;
+    Date departureDate, departureDate2;
     DepartureDetailListManagement departureDetailListManagement;
     FerryConfigListManagement ferryConfigListManagement;
     FerryDetailListManagement ferryDetailListManagement;
@@ -51,15 +51,15 @@ public class DummyCustomerBackend implements CustomerInterface { //should implem
         lineSummary2 = new LineSummary( "Malmo", "Copenhagen", 1, "2" );
         LineIdentifier lineIdentifier = new LineIdentifier( lineSummary.getId() );
         LineIdentifier lineIdentifier2 = new LineIdentifier( lineSummary2.getId() );
-        lineIdentifierList= new ArrayList();
+        lineIdentifierList = new ArrayList();
         lineIdentifierList.add( lineIdentifier );
         lineIdentifierList.add( lineIdentifier2 );
-        ferrySummary = new FerrySummary("ferry1", lineIdentifierList, "1" );
+        ferrySummary = new FerrySummary( "ferry1", lineIdentifierList, "1" );
         lineSummarylListManagement.addLineSummary( lineSummary );
         lineSummarylListManagement.addLineSummary( lineSummary2 );
         reservationDetail = new ReservationDetail( null, null, "", null, 0, 0, 0, 0, 0, 0.0, 0 );
         DateFormat format = new SimpleDateFormat( "EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH );
-        Date departureDate = null, departureDate2 = null;
+//        Date departureDate = null, departureDate2 = null;
         try {
             departureDate = format.parse( "Sun Nov 20 00:23:39 CET 2016" );
             departureDate2 = format.parse( "Sun Nov 20 00:10:39 CET 2016" );
@@ -113,10 +113,16 @@ public class DummyCustomerBackend implements CustomerInterface { //should implem
     @Override
     public ReservationSummary saveReservation( DepartureIdentifier departureIdentifier,
             int passengersNb, int numberOfResidents, boolean car, int numberOfHeavyMachinery, int numberOfLorries ) {
+        int carsNumber = 0;
+        if ( car == true ) {
+            carsNumber = 1;
+        }
+        DepartureSummary depSummary= departureDetailListManagement.getDepartures().get( departureIdentifier.getId());
 
-        ReservationDetail newReservationDetail = new ReservationDetail( departureDate, departureSummary,
-                                                                        "Mark Johnson", departureSummary,
-                                                                        passengersNb, 2, 1, 0, 40, 100, Math.toIntExact(
+        
+        ReservationDetail newReservationDetail = new ReservationDetail( departureDate, depSummary,
+                                                                        "Mark Johnson", depSummary,
+                                                                        passengersNb, numberOfResidents, carsNumber, numberOfLorries, numberOfHeavyMachinery, 100, Math.toIntExact(
                                                                                 reservationDetailListManagement.getNextIdReservationDetail() ) );
         reservationDetailListManagement.addReservationDetail( newReservationDetail );
 

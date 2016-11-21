@@ -7,6 +7,7 @@ import generalstuff.FerrySummary;
 import generalstuff.LineIdentifier;
 import generalstuff.LineSummary;
 import generalstuff.ReservationDetail;
+import generalstuff.ReservationSummary;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -24,21 +25,31 @@ public class ObjectMatchers {
                 boolean areMatching = false;
                 if ( theExpected instanceof ReservationDetail && o instanceof ReservationDetail ) {
                     ReservationDetail matcherReservationDetail = ( ReservationDetail ) theExpected;
-                    ReservationDetail expectedReservationDetail= ( ReservationDetail ) o;
+                    ReservationDetail expectedReservationDetail = ( ReservationDetail ) o;
 //                    type = "DepartureSummary";
-                    if ( (expectedReservationDetail.getCustomerName().equals( matcherReservationDetail.getCustomerName()))
-                            && (compareDepartureSummaries( expectedReservationDetail.getDepartureSummary(), matcherReservationDetail.getDepartureSummary() ))
+//                    System.out.println( expectedReservationDetail.getReservationMade() );
+                    if ( (expectedReservationDetail.getCustomerName().equals( matcherReservationDetail.getCustomerName() ))
+//                            && (compareDepartureSummaries( expectedReservationDetail.getDepartureSummary(), matcherReservationDetail.getDepartureSummary() ))
                             && (expectedReservationDetail.getNumberOfCars() == matcherReservationDetail.getNumberOfCars())
                             && (expectedReservationDetail.getNumberOfHeavyMachinery() == matcherReservationDetail.getNumberOfHeavyMachinery())
                             && (expectedReservationDetail.getNumberOfLorries() == matcherReservationDetail.getNumberOfLorries())
                             && (expectedReservationDetail.getNumberOfPeople() == matcherReservationDetail.getNumberOfPeople())
                             && (expectedReservationDetail.getNumberOfResidents() == matcherReservationDetail.getNumberOfResidents())
-                            && (!expectedReservationDetail.getReservationMade().after(matcherReservationDetail.getReservationMade()))
-                            && (!expectedReservationDetail.getReservationMade().before(matcherReservationDetail.getReservationMade()) )
+                            && (!expectedReservationDetail.getReservationMade().after( matcherReservationDetail.getReservationMade() ))
+                            && (!expectedReservationDetail.getReservationMade().before( matcherReservationDetail.getReservationMade() )) 
                             ) {
                         return true;
                     }
                 }
+
+//                if ( theExpected instanceof ReservationSummary && o instanceof ReservationSummary ) {
+//                    ReservationSummary matcherReservationSummary = ( ReservationSummary ) theExpected;
+//                    ReservationSummary expectedReservationSummary = ( ReservationSummary ) o;
+////                    type = "DepartureSummary";
+//                    if ( expectedReservationSummary.getId() == matcherReservationSummary.getId() ) {
+//                        return true;
+//                    }
+//                }
                 return false;
             }
 

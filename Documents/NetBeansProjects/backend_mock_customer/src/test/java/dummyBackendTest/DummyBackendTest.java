@@ -10,6 +10,7 @@ import generalstuff.LineIdentifier;
 import generalstuff.LineSummary;
 import generalstuff.ReservationDetail;
 import generalstuff.ReservationIdentifier;
+import generalstuff.ReservationSummary;
 import static java.lang.String.format;
 import java.util.Date;
 import org.junit.After;
@@ -54,6 +55,7 @@ public class DummyBackendTest {
     private static LineSummary lineSummary1;
     private static LineSummary lineSummary2;
     private static ReservationDetail expectedReservationDetail;
+    private static ReservationDetail expectedNewReservationDetail;
     private static List<LineIdentifier> linesIdList;
 
     public DummyBackendTest() {
@@ -91,6 +93,9 @@ public class DummyBackendTest {
         linesIdList = new ArrayList<>();
         expectedReservationDetail = new ReservationDetail( departureDate, departureSummary,
                                                            "Patrick Huston", departureSummary, 4, 0, 1, 0, 0, 80, 1 );
+        expectedNewReservationDetail = new ReservationDetail(departureDate, departureSummary, 
+                "Mark Johnson", departureSummary, 14, 14, 1, 
+                0, 1, 1000, 2 );
     }
 
     @AfterClass
@@ -109,6 +114,11 @@ public class DummyBackendTest {
     public void seeReservationTest() {
         ReservationDetail reservationDetail = dummyCustomerBackend.getReservation( reservationIdentifier );
         assertThat( reservationDetail, matches( expectedReservationDetail ) );
-       
+    }
+
+    @Test
+    public void saveReservationTest() {
+        ReservationDetail newReservationDetail = ( ReservationDetail ) dummyCustomerBackend.saveReservation( departureId, 14, 14, true, 1, 0 );
+        assertThat( newReservationDetail, matches( expectedNewReservationDetail ) );
     }
 }
