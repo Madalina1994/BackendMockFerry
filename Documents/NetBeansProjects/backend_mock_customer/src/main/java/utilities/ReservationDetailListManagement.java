@@ -17,6 +17,10 @@ public class ReservationDetailListManagement {
         return reservationDetailMap;
     }
 
+    public void removeReservationDetail(Long id) {
+        reservationDetailMap.remove( id );
+    }
+
     public static long getNextIdReservationDetail() {
         return ++nextIdreservationDetail;
     }

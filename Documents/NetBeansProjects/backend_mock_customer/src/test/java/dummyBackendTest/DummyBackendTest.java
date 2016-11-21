@@ -63,6 +63,14 @@ public class DummyBackendTest {
 
     @BeforeClass
     public static void setUpClass() {
+    }
+
+    @AfterClass
+    public static void tearDownClass() {
+    }
+
+    @Before
+    public void setUp() {
         dummyCustomerBackend = new DummyCustomerBackend();
         reservationDetailListManagement = new ReservationDetailListManagement();
         departureId = new DepartureIdentifier( 1 );
@@ -98,14 +106,6 @@ public class DummyBackendTest {
                                                               0, 1, 1000, 2 );
     }
 
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
-    @Before
-    public void setUp() {
-    }
-
     @After
     public void tearDown() {
     }
@@ -122,9 +122,9 @@ public class DummyBackendTest {
         assertThat( newReservationDetail, matches( expectedNewReservationDetail ) );
     }
 
-//    @Test//(expected = NullPointerException.class)
+    @Test
     public void deleteReservationTest() {
         dummyCustomerBackend.deleteReservation( reservationIdentifier );
-        dummyCustomerBackend.getReservation( reservationIdentifier );
+        assertEquals( dummyCustomerBackend.getReservation( reservationIdentifier ), null );
     }
 }
