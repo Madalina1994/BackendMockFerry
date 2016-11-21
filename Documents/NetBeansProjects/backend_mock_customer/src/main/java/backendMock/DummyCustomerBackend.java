@@ -165,7 +165,7 @@ public class DummyCustomerBackend implements CustomerInterface { //should implem
     @Override
     public Boolean deleteReservation( ReservationIdentifier reservationIdentifier ) {
         for ( Long l : reservationDetailListManagement.getReservationDetails().keySet() ) {
-            if ( Math.toIntExact( 1 ) == reservationIdentifier.getId() ) {
+            if ( Math.toIntExact( l ) == reservationIdentifier.getId() ) {
                 reservationDetailListManagement.getReservationDetails().remove( l );
                 return true;
             }
