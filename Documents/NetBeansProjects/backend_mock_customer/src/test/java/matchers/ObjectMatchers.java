@@ -26,10 +26,8 @@ public class ObjectMatchers {
                 if ( theExpected instanceof ReservationDetail && o instanceof ReservationDetail ) {
                     ReservationDetail matcherReservationDetail = ( ReservationDetail ) theExpected;
                     ReservationDetail expectedReservationDetail = ( ReservationDetail ) o;
-//                    type = "DepartureSummary";
-//                    System.out.println( expectedReservationDetail.getReservationMade() );
                     if ( (expectedReservationDetail.getCustomerName().equals( matcherReservationDetail.getCustomerName() ))
-//                            && (compareDepartureSummaries( expectedReservationDetail.getDepartureSummary(), matcherReservationDetail.getDepartureSummary() ))
+                            && (compareDepartureSummaries( expectedReservationDetail.getDepartureSummary(), matcherReservationDetail.getDepartureSummary() ))
                             && (expectedReservationDetail.getNumberOfCars() == matcherReservationDetail.getNumberOfCars())
                             && (expectedReservationDetail.getNumberOfHeavyMachinery() == matcherReservationDetail.getNumberOfHeavyMachinery())
                             && (expectedReservationDetail.getNumberOfLorries() == matcherReservationDetail.getNumberOfLorries())

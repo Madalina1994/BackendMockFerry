@@ -89,7 +89,7 @@ public class DummyBackendTest {
             Logger.getLogger( DummyBackendTest.class.getName() ).log( Level.SEVERE, null, ex );
         }
         lineSummary = new LineSummary( "B", "A", 1, "1" );
-        departureSummary = new DepartureSummary( departureDate, lineDetail, ferrySummary, 0 );
+        departureSummary = new DepartureSummary( departureDate, lineDetail, ferrySummary, 1 );
         linesIdList = new ArrayList<>();
         expectedReservationDetail = new ReservationDetail( departureDate, departureSummary,
                                                            "Patrick Huston", departureSummary, 4, 0, 1, 0, 0, 80, 1 );

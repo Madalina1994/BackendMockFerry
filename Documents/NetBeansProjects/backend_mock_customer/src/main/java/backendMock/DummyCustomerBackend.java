@@ -66,12 +66,12 @@ public class DummyCustomerBackend implements CustomerInterface { //should implem
         } catch ( ParseException ex ) {
             Logger.getLogger( DummyCustomerBackend.class.getName() ).log( Level.SEVERE, null, ex );
         }
-        departureSummary = new DepartureSummary( departureDate, lineDetail, ferrySummary, 0 );
-        departureSummary2 = new DepartureSummary( departureDate2, lineDetail2, null, 0 );
+        departureSummary = new DepartureSummary( departureDate, lineDetail, ferrySummary, 1 );
+        departureSummary2 = new DepartureSummary( departureDate2, lineDetail2, ferrySummary, 2 );
         departuresForLineAndDate = new HashMap<>();
         departuresForLineAndDateGeneralStuff = new HashMap<>();
-        departureDetail = new DepartureDetail( 50, 100, 120, 150, 10, 100, 20, 1, 1, departureDate, lineSummary, null, 1 );
-        departureDetail2 = new DepartureDetail( 50, 100, 120, 150, 10, 100, 20, 1, 1, departureDate2, lineSummary2, null, 1 );
+        departureDetail = new DepartureDetail( 50, 100, 120, 150, 10, 100, 20, 1, 1, departureDate, lineSummary, ferrySummary, 1 );
+        departureDetail2 = new DepartureDetail( 50, 100, 120, 150, 10, 100, 20, 1, 1, departureDate2, lineSummary2, ferrySummary, 1 );
         departureDetailListManagement.addDeparture( departureDetail );
         departureDetailListManagement.addDeparture( departureDetail2 );
         dummyReservationDetail = new ReservationDetail( departureDate, departureSummary,
