@@ -6,8 +6,13 @@ import java.util.Map;
 
 public class DepartureDetailListManagement {
 
-    private static Map<Long, DepartureDetail> departuresMap = new HashMap<>();
-    private static long nextIdDeparture = 0;
+    private static Map<Long, DepartureDetail> departuresMap;
+    private static long nextIdDeparture;
+
+    public DepartureDetailListManagement() {
+        departuresMap = new HashMap<>();
+        nextIdDeparture = 0;
+    }
 
     public void addDeparture( DepartureDetail departureDetail ) {
         departuresMap.put( ++nextIdDeparture, departureDetail );

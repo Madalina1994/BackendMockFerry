@@ -36,7 +36,6 @@ import static matchers.ObjectMatchers.matches;
 import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class DummyBackendTest {
 
     private DummyCustomerBackend dummyCustomerBackend;
@@ -74,7 +73,6 @@ public class DummyBackendTest {
 
     @Before
     public void setUp() {
-        dummyCustomerBackend = new DummyCustomerBackend();
         reservationDetailListManagement = new ReservationDetailListManagement();
         departureId = new DepartureIdentifier( 1 );
         departureId2 = new DepartureIdentifier( 2 );
@@ -107,6 +105,7 @@ public class DummyBackendTest {
         expectedNewReservationDetail = new ReservationDetail( departureDate, departureSummary,
                                                               "Mark Johnson", departureSummary, 14, 14, 1,
                                                               0, 1, 1000, 2 );
+        dummyCustomerBackend = new DummyCustomerBackend();
     }
 
     @After
@@ -114,7 +113,7 @@ public class DummyBackendTest {
     }
 
     @Test
-    public void aseeReservationTest() {
+    public void seeReservationTest() {
         ReservationDetail reservationDetail = dummyCustomerBackend.getReservation( reservationIdentifier );
         assertThat( reservationDetail, matches( expectedReservationDetail ) );
     }

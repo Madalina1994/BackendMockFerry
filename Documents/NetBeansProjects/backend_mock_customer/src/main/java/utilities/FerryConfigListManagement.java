@@ -6,8 +6,13 @@ import java.util.Map;
 
 public class FerryConfigListManagement {
 
-    private static Map<Long, FerryConfigDetail> ferryConfigsDetailMap = new HashMap<>();
-    private static long nextIdferryConfig = 0;
+    private static Map<Long, FerryConfigDetail> ferryConfigsDetailMap;
+    private static long nextIdferryConfig;
+
+    public FerryConfigListManagement() {
+        ferryConfigsDetailMap = new HashMap<>();
+        nextIdferryConfig = 0;;
+    }
 
     public void addFerryConfigsDetail( FerryConfigDetail ferryConfigDetail ) {
         ferryConfigsDetailMap.put( nextIdferryConfig, ferryConfigDetail );

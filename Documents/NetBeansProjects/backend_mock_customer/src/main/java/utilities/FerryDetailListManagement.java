@@ -7,8 +7,13 @@ import java.util.Map;
 public class FerryDetailListManagement {
     
     
-    private static Map<Long, FerryDetail> ferryDetailMap = new HashMap<>();
-    private static long nextIdferry = 0;
+    private static Map<Long, FerryDetail> ferryDetailMap;
+    private static long nextIdferry;
+
+    public FerryDetailListManagement() {
+        ferryDetailMap = new HashMap<>();
+        nextIdferry = 0;
+    }
 
     public void addFerryDetail( FerryDetail ferryDetail ) {
         ferryDetailMap.put( nextIdferry, ferryDetail );

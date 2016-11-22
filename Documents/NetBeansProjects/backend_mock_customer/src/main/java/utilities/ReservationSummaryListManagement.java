@@ -5,8 +5,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ReservationSummaryListManagement {
-    private static Map<Long, ReservationSummary> reservationSummaryMap = new HashMap<>();
-    private static long nextIdReservationSummary = 0;
+
+    private static Map<Long, ReservationSummary> reservationSummaryMap;
+    private static long nextIdReservationSummary;
+
+    public ReservationSummaryListManagement() {
+        reservationSummaryMap = new HashMap<>();
+        nextIdReservationSummary = 0;
+    }
 
     public void addReservationSummary( ReservationSummary reservationSummary ) {
         reservationSummaryMap.put( nextIdReservationSummary, reservationSummary );
