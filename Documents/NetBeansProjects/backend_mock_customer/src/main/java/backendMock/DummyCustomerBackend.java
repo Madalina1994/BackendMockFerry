@@ -27,7 +27,6 @@ public class DummyCustomerBackend implements CustomerInterface { //should implem
     DepartureDetailListManagement departureDetailListManagement;
     FerryConfigListManagement ferryConfigListManagement;
     FerryDetailListManagement ferryDetailListManagement;
-    LineSummaryListManagement lineSummarylListManagement;
     ReservationDetailListManagement reservationDetailListManagement;
     ReservationSummaryListManagement reservationSummaryListManagement;
     public ReservationDetail dummyReservationDetail;
@@ -41,7 +40,6 @@ public class DummyCustomerBackend implements CustomerInterface { //should implem
         departureDetailListManagement = new DepartureDetailListManagement();
         ferryConfigListManagement = new FerryConfigListManagement();
         ferryDetailListManagement = new FerryDetailListManagement();
-        lineSummarylListManagement = new LineSummaryListManagement();
         reservationDetailListManagement = new ReservationDetailListManagement();
         reservationSummaryListManagement = new ReservationSummaryListManagement();
         lineDetail = new LineDetail( "B", "A", 1, "1" );
@@ -54,8 +52,6 @@ public class DummyCustomerBackend implements CustomerInterface { //should implem
         lineIdentifierList.add( lineIdentifier );
         lineIdentifierList.add( lineIdentifier2 );
         ferrySummary = new FerrySummary( "ferry1", lineIdentifierList, "1" );
-        lineSummarylListManagement.addLineSummary( lineSummary );
-        lineSummarylListManagement.addLineSummary( lineSummary2 );
         reservationDetail = new ReservationDetail( null, null, "", null, 0, 0, 0, 0, 0, 0.0, 0 );
         DateFormat format = new SimpleDateFormat( "EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH );
 //        Date departureDate = null, departureDate2 = null;
@@ -70,7 +66,7 @@ public class DummyCustomerBackend implements CustomerInterface { //should implem
         departuresForLineAndDate = new HashMap<>();
         departuresForLineAndDateGeneralStuff = new HashMap<>();
         departureDetail = new DepartureDetail( 50, 100, 120, 150, 10, 100, 20, 1, 1, departureDate, lineSummary, ferrySummary, 1 );
-        departureDetail2 = new DepartureDetail( 50, 100, 120, 150, 10, 100, 20, 1, 1, departureDate2, lineSummary2, ferrySummary, 1 );
+        departureDetail2 = new DepartureDetail( 50, 100, 120, 150, 10, 100, 20, 1, 1, departureDate2, lineSummary2, ferrySummary, 2 );
         departureDetailListManagement.addDeparture( departureDetail );
         departureDetailListManagement.addDeparture( departureDetail2 );
         dummyReservationDetail = new ReservationDetail( departureDate, departureSummary,
@@ -83,16 +79,20 @@ public class DummyCustomerBackend implements CustomerInterface { //should implem
 
     @Override
     public Collection<LineSummary> getLines() {
-        return lineSummarylListManagement.getLineSummaries().values();
+        LineSummaryListManagement linesHashMap = new LineSummaryListManagement();
+        linesHashMap.addLineSummary(new LineSummary( "B", "A", 1, "1" ));
+        linesHashMap.addLineSummary( new LineSummary("Malmo", "Copenhagen", 1, "2" ));
+        return linesHashMap.getLineSummaries().values();
     }
 
     //finds the departures for a specific line and date (Note: the time is not taken into consideration!)
     @Override
     public Collection<DepartureDetail> getDepartures( LineIdentifier lineIdentifier, Date departureDate ) {
+        System.out.println("am I even getting here?!?");
         for ( DepartureDetail departure : departureDetailListManagement.getDepartures().values() ) {
             if ( departure.getLineSummary().getId().equals( lineIdentifier.getId() )
-                    && !departure.getDepartureTime().after( departureDate )
-                    && !departure.getDepartureTime().before( departureDate ) ) {
+//                    && !departure.getDepartureTime().after( departureDate ) && !departure.getDepartureTime().before( departureDate )
+            ) {
                 departuresForLineAndDate.put( departure.getId(), departure );
             }
         }
