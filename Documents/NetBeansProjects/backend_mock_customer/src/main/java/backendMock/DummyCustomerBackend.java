@@ -34,7 +34,7 @@ public class DummyCustomerBackend implements CustomerInterface { //should implem
     ReservationDetail dummyReservationDetail;
     ReservationSummary dummyReservationSummary;
     FerrySummary ferrySummary;
-    private static Map<Long, DepartureDetail> departuresForLineAndDate;
+    private static Map<Integer, DepartureDetail> departuresForLineAndDate;
     private static Map<Long, DepartureDetail> departuresForLineAndDateGeneralStuff;//needed just to return the same type as in the interface
     private static List<LineIdentifier> lineIdentifierList;
 
@@ -45,19 +45,19 @@ public class DummyCustomerBackend implements CustomerInterface { //should implem
         lineSummarylListManagement = new LineSummaryListManagement();
         reservationDetailListManagement = new ReservationDetailListManagement();
         reservationSummaryListManagement = new ReservationSummaryListManagement();
-        lineDetail = new LineDetail( "B", "A", 1, "1" );
-        lineSummary = new LineSummary( "B", "A", 1, "1" );
-        lineDetail2 = new LineDetail( "Malmo", "Copenhagen", 1, "2" );
-        lineSummary2 = new LineSummary( "Malmo", "Copenhagen", 1, "2" );
+        lineDetail = new LineDetail( "B", "A", 1, 1 );
+        lineSummary = new LineSummary( "B", "A", 1, 1 );
+        lineDetail2 = new LineDetail( "Malmo", "Copenhagen", 1, 2 );
+        lineSummary2 = new LineSummary( "Malmo", "Copenhagen", 1, 2 );
         LineIdentifier lineIdentifier = new LineIdentifier( lineSummary.getId() );
         LineIdentifier lineIdentifier2 = new LineIdentifier( lineSummary2.getId() );
         lineIdentifierList = new ArrayList();
         lineIdentifierList.add( lineIdentifier );
         lineIdentifierList.add( lineIdentifier2 );
-        ferrySummary = new FerrySummary( "ferry1", lineIdentifierList, "1" );
+        ferrySummary = new FerrySummary( "ferry1", lineIdentifierList, 1 );
         lineSummarylListManagement.addLineSummary( lineSummary );
         lineSummarylListManagement.addLineSummary( lineSummary2 );
-        reservationDetail = new ReservationDetail( null, null, "", null, 0, 0, 0, 0, 0, 0.0, 0 );
+        reservationDetail = new ReservationDetail( null, null, "", 0, 0, 0, 0, 0, 0.0, 0 );
         DateFormat format = new SimpleDateFormat( "EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH );
 //        Date departureDate = null, departureDate2 = null;
         try {
@@ -75,7 +75,7 @@ public class DummyCustomerBackend implements CustomerInterface { //should implem
         departureDetailListManagement.addDeparture( departureDetail );
         departureDetailListManagement.addDeparture( departureDetail2 );
         dummyReservationDetail = new ReservationDetail( departureDate, departureSummary,
-                                                        "Patrick Huston", departureSummary, 4, 0, 1, 0, 0, 80,
+                                                        "Patrick Huston", 4, 0, 1, 0, 0, 80,
                                                         Math.toIntExact( reservationDetailListManagement.getNextIdReservationDetail() ) );
         reservationDetailListManagement.addReservationDetail( dummyReservationDetail );
         dummyReservationSummary = new ReservationSummary( 40.0, 1 );
@@ -91,7 +91,7 @@ public class DummyCustomerBackend implements CustomerInterface { //should implem
     @Override
     public Collection<DepartureDetail> getDepartures( LineIdentifier lineIdentifier, Date departureDate ) {
         for ( DepartureDetail departure : departureDetailListManagement.getDepartures().values() ) {
-            if ( departure.getLineSummary().getId().equals( lineIdentifier.getId() )
+            if ( departure.getLineSummary().getId() == lineIdentifier.getId()
                     && !departure.getDepartureTime().after( departureDate )
                     && !departure.getDepartureTime().before( departureDate ) ) {
                 departuresForLineAndDate.put( departure.getId(), departure );
@@ -111,17 +111,17 @@ public class DummyCustomerBackend implements CustomerInterface { //should implem
     }
 
     @Override
-    public ReservationSummary saveReservation( DepartureIdentifier departureIdentifier,
-            int passengersNb, int numberOfResidents, boolean car, int numberOfHeavyMachinery, int numberOfLorries ) {
+    public ReservationSummary saveReservation( DepartureIdentifier departureIdentifier, int passengersNb,
+             int numberOfResidents, boolean car, int numberOfHeavyMachinery, int numberOfLorries, String customerName) {
         int carsNumber = 0;
         if ( car == true ) {
             carsNumber = 1;
         }
         DepartureSummary depSummary= departureDetailListManagement.getDepartures().get( departureIdentifier.getId()); 
         ReservationDetail newReservationDetail = new ReservationDetail( depSummary.getDepartureTime(), depSummary,
-                                                                        "Mark Johnson", depSummary,
-                                                                        passengersNb, numberOfResidents, carsNumber, numberOfLorries, numberOfHeavyMachinery, 100, Math.toIntExact(
-                                                                                reservationDetailListManagement.getNextIdReservationDetail() ) );
+                                                                        "Mark Johnson", passengersNb, numberOfResidents, 
+                                                                        carsNumber, numberOfLorries, numberOfHeavyMachinery, 
+                                                                        100, Math.toIntExact(reservationDetailListManagement.getNextIdReservationDetail() ) );
         reservationDetailListManagement.addReservationDetail( newReservationDetail );
 
         return newReservationDetail;
@@ -129,14 +129,15 @@ public class DummyCustomerBackend implements CustomerInterface { //should implem
 
     @Override
     public ReservationSummary updateReservation( ReservationIdentifier reservationIdentifier,
-            DepartureIdentifier departureIdentifier, int passengersNb, int numberOfResidents, boolean car ) {
+            DepartureIdentifier departureIdentifier, int passengersNb, int numberOfResidents, boolean car,
+            int numberOfHeavyMachinery, int numberOfLorries, String customerName) {
         Date departureDate = null;
 //        String departurePort = "";
 //        String destinationPort = "";
 //        LineSummary lineSummary = null;
         DepartureSummary depSummary = null;
 
-        for ( Long l : departureDetailListManagement.getDepartures().keySet() ) {
+        for ( int l : departureDetailListManagement.getDepartures().keySet() ) {
             if ( Math.toIntExact( l ) == departureIdentifier.getId() ) {
 //                lineSummary = departureDetailListManagement.getDepartures().get( l ).getLineSummary();
 //                departurePort = lineSummary.getDeparturePort();
@@ -150,7 +151,7 @@ public class DummyCustomerBackend implements CustomerInterface { //should implem
             if ( Math.toIntExact( l ) == reservationIdentifier.getId() ) {
                 reservationDetailListManagement.getReservationDetails().replace(
                         l, new ReservationDetail( departureDate,
-                                                  depSummary, "edited customer", depSummary,
+                                                  depSummary, "edited customer",
                                                   passengersNb, numberOfResidents,
                                                   reservationDetailListManagement.getReservationDetails().get( l ).getNumberOfCars(),
                                                   reservationDetailListManagement.getReservationDetails().get( l ).getNumberOfLorries(), 40,

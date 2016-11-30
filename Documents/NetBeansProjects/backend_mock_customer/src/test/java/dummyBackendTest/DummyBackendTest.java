@@ -81,29 +81,29 @@ public class DummyBackendTest {
         linesList = new LineSummaryListManagement();
         lineSummary = linesList.getLineSummaries().get( Long.valueOf( "1" ) );
         departureDetailListManagement = new DepartureDetailListManagement();
-        lineDetail = new LineDetail( "B", "A", 1, "1" );
-        lineSummary = new LineSummary( "B", "A", 1, "1" );
-        lineDetail2 = new LineDetail( "Malmo", "Copenhagen", 1, "2" );
-        lineSummary2 = new LineSummary( "Malmo", "Copenhagen", 1, "2" );
+        lineDetail = new LineDetail( "B", "A", 1, 1 );
+        lineSummary = new LineSummary( "B", "A", 1, 1 );
+        lineDetail2 = new LineDetail( "Malmo", "Copenhagen", 1, 2 );
+        lineSummary2 = new LineSummary( "Malmo", "Copenhagen", 1, 2 );
         LineIdentifier lineIdentifier = new LineIdentifier( lineSummary.getId() );
         LineIdentifier lineIdentifier2 = new LineIdentifier( lineSummary2.getId() );
         linesIdList = new ArrayList();
         linesIdList.add( lineIdentifier );
         linesIdList.add( lineIdentifier2 );
-        ferrySummary = new FerrySummary( "ferry1", linesIdList, "1" );
+        ferrySummary = new FerrySummary( "ferry1", linesIdList, 1 );
         format = new SimpleDateFormat( "EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH );
         try {
             departureDate = format.parse( "Sun Nov 20 00:23:39 CET 2016" );
         } catch ( ParseException ex ) {
             Logger.getLogger( DummyBackendTest.class.getName() ).log( Level.SEVERE, null, ex );
         }
-        lineSummary = new LineSummary( "B", "A", 1, "1" );
+        lineSummary = new LineSummary( "B", "A", 1, 1 );
         departureSummary = new DepartureSummary( departureDate, lineDetail, ferrySummary, 1 );
         linesIdList = new ArrayList<>();
         expectedReservationDetail = new ReservationDetail( departureDate, departureSummary,
-                                                           "Patrick Huston", departureSummary, 4, 0, 1, 0, 0, 80, 1 );
+                                                           "Patrick Huston", 4, 0, 1, 0, 0, 80, 1 );
         expectedNewReservationDetail = new ReservationDetail( departureDate, departureSummary,
-                                                              "Mark Johnson", departureSummary, 14, 14, 1,
+                                                              "Mark Johnson", 14, 14, 1,
                                                               0, 1, 1000, 2 );
         dummyCustomerBackend = new DummyCustomerBackend();
     }
@@ -120,7 +120,7 @@ public class DummyBackendTest {
 
     @Test
     public void createReservationTest() {
-        ReservationDetail newReservationDetail = ( ReservationDetail ) dummyCustomerBackend.saveReservation( departureId, 14, 14, true, 1, 0 );
+        ReservationDetail newReservationDetail = ( ReservationDetail ) dummyCustomerBackend.saveReservation( departureId, 14, 14, true, 1, 0, "John Marker" );
         assertThat( newReservationDetail, matches( expectedNewReservationDetail ) );
     }
 
@@ -128,7 +128,7 @@ public class DummyBackendTest {
     public void editReservation() {
         ReservationDetail initialReservation = dummyCustomerBackend.getReservation( reservationIdentifier );
         ReservationDetail editedReservationSummary = ( ReservationDetail ) dummyCustomerBackend.updateReservation(
-                reservationIdentifier, departureId2, 20, 0, true );
+                reservationIdentifier, departureId2, 20, 0, true, 0, 0, "Daniel Petersen" );
         assertThat( editedReservationSummary, matches( initialReservation ) );
     }
 

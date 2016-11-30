@@ -39,15 +39,6 @@ public class ObjectMatchers {
                         return true;
                     }
                 }
-
-//                if ( theExpected instanceof ReservationSummary && o instanceof ReservationSummary ) {
-//                    ReservationSummary matcherReservationSummary = ( ReservationSummary ) theExpected;
-//                    ReservationSummary expectedReservationSummary = ( ReservationSummary ) o;
-////                    type = "DepartureSummary";
-//                    if ( expectedReservationSummary.getId() == matcherReservationSummary.getId() ) {
-//                        return true;
-//                    }
-//                }
                 return false;
             }
 
@@ -70,7 +61,7 @@ public class ObjectMatchers {
             }
 
             public boolean compareLineSummaries( LineSummary expectedLineSummary, LineSummary matcherLineSummary ) {
-                if ( expectedLineSummary.getId().equals( matcherLineSummary.getId() )
+                if ( expectedLineSummary.getId() == matcherLineSummary.getId()
                         && expectedLineSummary.getDeparturePort().equals( matcherLineSummary.getDeparturePort() )
                         && expectedLineSummary.getDestinationPort().equals( matcherLineSummary.getDestinationPort() )
                         && expectedLineSummary.getDuration() == matcherLineSummary.getDuration() ) {
