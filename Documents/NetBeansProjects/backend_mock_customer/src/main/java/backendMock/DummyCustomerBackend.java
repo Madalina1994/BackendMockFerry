@@ -11,7 +11,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
+import java.util.Locale; 
 import utilities.*;
 import java.util.Map;
 import java.util.logging.Level;
@@ -117,6 +117,7 @@ public class DummyCustomerBackend implements CustomerInterface { //should implem
         if ( car == true ) {
             carsNumber = 1;
         }
+//        long totalPrice= find departureDetail and then say the total price is the departure detail price * (passengerNb + residentsNb)
         DepartureSummary depSummary= departureDetailListManagement.getDepartures().get( departureIdentifier.getId()); 
         ReservationDetail newReservationDetail = new ReservationDetail( depSummary.getDepartureTime(), depSummary,
                                                                         "Mark Johnson", passengersNb, numberOfResidents, 

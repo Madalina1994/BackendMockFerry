@@ -43,7 +43,7 @@
         <dependency>
             <groupId>B</groupId>
             <artifactId>FerryProjectContract</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.0-20161130.105031-6</version>
         </dependency>
     </dependencies>
 </project>
