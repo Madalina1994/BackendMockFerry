@@ -59,7 +59,6 @@ public class DummyCustomerBackend implements CustomerInterface { //should implem
         lineSummarylListManagement.addLineSummary( lineSummary2 );
         reservationDetail = new ReservationDetail( null, null, "", 0, 0, 0, 0, 0, 0.0, 0 );
         DateFormat format = new SimpleDateFormat( "EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH );
-//        Date departureDate = null, departureDate2 = null;
         try {
             departureDate = format.parse( "Sun Nov 20 00:23:39 CET 2016" );
             departureDate2 = format.parse( "Sun Nov 20 00:10:39 CET 2016" );
@@ -118,11 +117,15 @@ public class DummyCustomerBackend implements CustomerInterface { //should implem
             carsNumber = 1;
         }
 //        long totalPrice= find departureDetail and then say the total price is the departure detail price * (passengerNb + residentsNb)
-        DepartureSummary depSummary= departureDetailListManagement.getDepartures().get( departureIdentifier.getId()); 
+        DepartureDetail depDetail= departureDetailListManagement.getDepartures().get( departureIdentifier.getId());
+        long price= depDetail.getPricePerCar() * carsNumber + depDetail.getPricePerHeavy() * numberOfHeavyMachinery
+                + depDetail.getPricePerLorry()* numberOfLorries + depDetail.getPricePerPerson()* passengersNb
+                + depDetail.getPricePerResident() * numberOfResidents;
+        DepartureSummary depSummary= departureDetailListManagement.getDepartures().get( departureIdentifier.getId());
         ReservationDetail newReservationDetail = new ReservationDetail( depSummary.getDepartureTime(), depSummary,
                                                                         "Mark Johnson", passengersNb, numberOfResidents, 
                                                                         carsNumber, numberOfLorries, numberOfHeavyMachinery, 
-                                                                        100, Math.toIntExact(reservationDetailListManagement.getNextIdReservationDetail() ) );
+                                                                        price, Math.toIntExact(reservationDetailListManagement.getNextIdReservationDetail() ) );
         reservationDetailListManagement.addReservationDetail( newReservationDetail );
 
         return newReservationDetail;
