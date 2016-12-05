@@ -1,84 +1,60 @@
 package backendMock;
 
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap; 
 import interfaces.*;
 import generalstuff.*;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale; 
 import utilities.*;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 
 public class DummyCustomerBackend implements CustomerInterface { //should implement the interface from the contract
 
-    private DepartureDetail departureDetail, departureDetail2;
-    private LineDetail lineDetail, lineDetail2;
-    private LineSummary lineSummary, lineSummary2;
-    ReservationDetail reservationDetail;
-    DepartureSummary departureSummary, departureSummary2;
-    Date departureDate, departureDate2;
-    DepartureDetailListManagement departureDetailListManagement;
-    FerryConfigListManagement ferryConfigListManagement;
-    FerryDetailListManagement ferryDetailListManagement;
-    LineSummaryListManagement lineSummarylListManagement;
-    ReservationDetailListManagement reservationDetailListManagement;
-    ReservationSummaryListManagement reservationSummaryListManagement;
-    ReservationDetail dummyReservationDetail;
-    ReservationSummary dummyReservationSummary;
-    FerrySummary ferrySummary;
-    private static Map<Integer, DepartureDetail> departuresForLineAndDate;
-    private static Map<Long, DepartureDetail> departuresForLineAndDateGeneralStuff;//needed just to return the same type as in the interface
-    private static List<LineIdentifier> lineIdentifierList;
+    public DepartureDetailListManagement departureDetailListManagement;
+    public LineSummaryListManagement lineSummarylListManagement;
+    public static ReservationDetailListManagement reservationDetailListManagement;
 
     public DummyCustomerBackend() {
         departureDetailListManagement = new DepartureDetailListManagement();
-        ferryConfigListManagement = new FerryConfigListManagement();
-        ferryDetailListManagement = new FerryDetailListManagement();
         lineSummarylListManagement = new LineSummaryListManagement();
         reservationDetailListManagement = new ReservationDetailListManagement();
-        reservationSummaryListManagement = new ReservationSummaryListManagement();
-        lineDetail = new LineDetail( "B", "A", 1, 1 );
-        lineSummary = new LineSummary( "B", "A", 1, 1 );
-        lineDetail2 = new LineDetail( "Malmo", "Copenhagen", 1, 2 );
-        lineSummary2 = new LineSummary( "Malmo", "Copenhagen", 1, 2 );
-        LineIdentifier lineIdentifier = new LineIdentifier( lineSummary.getId() );
-        LineIdentifier lineIdentifier2 = new LineIdentifier( lineSummary2.getId() );
-        lineIdentifierList = new ArrayList();
-        lineIdentifierList.add( lineIdentifier );
-        lineIdentifierList.add( lineIdentifier2 );
-        ferrySummary = new FerrySummary( "ferry1", lineIdentifierList, 1 );
-        lineSummarylListManagement.addLineSummary( lineSummary );
-        lineSummarylListManagement.addLineSummary( lineSummary2 );
-        reservationDetail = new ReservationDetail( null, null, "", 0, 0, 0, 0, 0, 0.0, 0 );
-        DateFormat format = new SimpleDateFormat( "EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH );
-        try {
-            departureDate = format.parse( "Sun Nov 20 00:23:39 CET 2016" );
-            departureDate2 = format.parse( "Sun Nov 20 00:10:39 CET 2016" );
-        } catch ( ParseException ex ) {
-            Logger.getLogger( DummyCustomerBackend.class.getName() ).log( Level.SEVERE, null, ex );
-        }
-        departureSummary = new DepartureSummary( departureDate, lineDetail, ferrySummary, 1 );
-        departureSummary2 = new DepartureSummary( departureDate2, lineDetail2, ferrySummary, 2 );
-        departuresForLineAndDate = new HashMap<>();
-        departuresForLineAndDateGeneralStuff = new HashMap<>();
-        departureDetail = new DepartureDetail( 50, 100, 120, 150, 10, 100, 20, 1, 1, departureDate, lineSummary, ferrySummary, 1 );
-        departureDetail2 = new DepartureDetail( 50, 100, 120, 150, 10, 100, 20, 1, 1, departureDate2, lineSummary2, ferrySummary, 1 );
-        departureDetailListManagement.addDeparture( departureDetail );
-        departureDetailListManagement.addDeparture( departureDetail2 );
-        dummyReservationDetail = new ReservationDetail( departureDate, departureSummary,
-                                                        "Patrick Huston", 4, 0, 1, 0, 0, 80,
-                                                        Math.toIntExact( reservationDetailListManagement.getNextIdReservationDetail() ) );
-        reservationDetailListManagement.addReservationDetail( dummyReservationDetail );
-        dummyReservationSummary = new ReservationSummary( 40.0, 1 );
-        reservationSummaryListManagement.addReservationSummary( dummyReservationSummary );
+
+        populateLineSummarylListManagement();
+        populateDepartureDetailListManagement();
+        populateReservationDetailListManagement();
+    }
+
+    private void populateLineSummarylListManagement() {
+        lineSummarylListManagement.addLineSummary(new LineSummary("København", "Malmø", 40, 1));
+        lineSummarylListManagement.addLineSummary(new LineSummary("Malmø", "København", 40, 2));
+        lineSummarylListManagement.addLineSummary(new LineSummary("Kalundborg", "Samsø", 20, 3));
+        lineSummarylListManagement.addLineSummary(new LineSummary("Samsø", "Kalundborg", 20, 4));
+//        lineDetail4 = new LineDetail(lineSummary4.getDeparturePort(), lineSummary4.getDeparturePort(), lineSummary4.getDuration(), lineSummary4.getId());
+    }
+
+    private void populateDepartureDetailListManagement() {
+        DateTime tomorrow = new DateTime(DateTimeZone.forID("Europe/Copenhagen")).plusDays(1);
+        Long tomorrowInMilis = tomorrow.getMillis() - tomorrow.getMillisOfDay();
+        FerrySummary ferrySummary = null;
+
+        LineSummary ls = lineSummarylListManagement.getLineSummaries().get(new Long(1));
+        departureDetailListManagement.addDeparture(new DepartureDetail(50, 100, 120, 150, 10, 100, 20, 1, 1, new Date(tomorrowInMilis + 8 * 3600000), ls, ferrySummary, 1));
+        departureDetailListManagement.addDeparture(new DepartureDetail(50, 100, 120, 150, 10, 100, 20, 1, 1, new Date(tomorrowInMilis + 12 * 3600000), ls, ferrySummary, 2));
+    }
+
+    private void populateReservationDetailListManagement() {
+        DepartureDetail departureDetail;
+        DepartureSummary ds;
+
+        departureDetail = departureDetailListManagement.getDepartures().get(1);
+        ds = new DepartureSummary(departureDetail.getDepartureTime(), departureDetail.getLineSummary(), departureDetail.getFerrySummary(), departureDetail.getId());
+        reservationDetailListManagement.addReservationDetail(new ReservationDetail(ds.getDepartureTime(), ds, "Tomoe Murakami Petersen", 4, 0, 1, 0, 0, 80, Math.toIntExact(reservationDetailListManagement.getNextIdReservationDetail())));
+
+        departureDetail = departureDetailListManagement.getDepartures().get(2);
+        ds = new DepartureSummary(departureDetail.getDepartureTime(), departureDetail.getLineSummary(), departureDetail.getFerrySummary(), departureDetail.getId());
+        reservationDetailListManagement.addReservationDetail(new ReservationDetail(ds.getDepartureTime(), ds, "Madalina Dragan", 4, 0, 1, 0, 0, 80, Math.toIntExact(reservationDetailListManagement.getNextIdReservationDetail())));
     }
 
     @Override
@@ -86,53 +62,49 @@ public class DummyCustomerBackend implements CustomerInterface { //should implem
         return lineSummarylListManagement.getLineSummaries().values();
     }
 
-    //finds the departures for a specific line and date (Note: the time is not taken into consideration!)
+    // finds the departures for a specific line and date (Note: the time is not taken into consideration!)
     @Override
-    public Collection<DepartureDetail> getDepartures( LineIdentifier lineIdentifier, Date departureDate ) {
-        for ( DepartureDetail departure : departureDetailListManagement.getDepartures().values() ) {
-            if ( departure.getLineSummary().getId() == lineIdentifier.getId()
-                    && !departure.getDepartureTime().after( departureDate )
-                    && !departure.getDepartureTime().before( departureDate ) ) {
-                departuresForLineAndDate.put( departure.getId(), departure );
+    public Collection<DepartureDetail> getDepartures(LineIdentifier lineIdentifier, Date departureDate) {
+        Map<Integer, DepartureDetail> departuresForLineAndDate = new HashMap<>();
+
+        for (DepartureDetail thisD : departureDetailListManagement.getDepartures().values()) {
+            if (thisD.getLineSummary().getId() == lineIdentifier.getId() && thisD.getDepartureTime().getYear() == departureDate.getYear()
+                    && thisD.getDepartureTime().getMonth() == departureDate.getMonth() && thisD.getDepartureTime().getDate() == departureDate.getDate()) {
+                departuresForLineAndDate.put(thisD.getId(), thisD);
             }
         }
         return departuresForLineAndDate.values();
     }
 
     @Override
-    public ReservationDetail getReservation( ReservationIdentifier id ) {
-        for ( Long l : reservationDetailListManagement.getReservationDetails().keySet() ) {
-            if ( Math.toIntExact( l ) == id.getId() ) {
-                return reservationDetailListManagement.getReservationDetails().get( l );
-            }
-        }
-        return null;
+    public ReservationDetail getReservation(ReservationIdentifier id) {
+        return reservationDetailListManagement.getReservationDetails().get(new Long(id.getId()));
     }
 
     @Override
-    public ReservationSummary saveReservation( DepartureIdentifier departureIdentifier, int passengersNb,
-             int numberOfResidents, boolean car, int numberOfHeavyMachinery, int numberOfLorries, String customerName) {
+    public ReservationSummary saveReservation(DepartureIdentifier departureIdentifier, int passengersNb,
+            int numberOfResidents, boolean car, int numberOfHeavyMachinery, int numberOfLorries, String customerName) {
         int carsNumber = 0;
-        if ( car == true ) {
+        if (car == true) {
             carsNumber = 1;
         }
 //        long totalPrice= find departureDetail and then say the total price is the departure detail price * (passengerNb + residentsNb)
-        DepartureDetail depDetail= departureDetailListManagement.getDepartures().get( departureIdentifier.getId());
-        long price= depDetail.getPricePerCar() * carsNumber + depDetail.getPricePerHeavy() * numberOfHeavyMachinery
-                + depDetail.getPricePerLorry()* numberOfLorries + depDetail.getPricePerPerson()* passengersNb
+        DepartureDetail depDetail = departureDetailListManagement.getDepartures().get(departureIdentifier.getId());
+        long price = depDetail.getPricePerCar() * carsNumber + depDetail.getPricePerHeavy() * numberOfHeavyMachinery
+                + depDetail.getPricePerLorry() * numberOfLorries + depDetail.getPricePerPerson() * passengersNb
                 + depDetail.getPricePerResident() * numberOfResidents;
-        DepartureSummary depSummary= departureDetailListManagement.getDepartures().get( departureIdentifier.getId());
-        ReservationDetail newReservationDetail = new ReservationDetail( depSummary.getDepartureTime(), depSummary,
-                                                                        "Mark Johnson", passengersNb, numberOfResidents, 
-                                                                        carsNumber, numberOfLorries, numberOfHeavyMachinery, 
-                                                                        price, Math.toIntExact(reservationDetailListManagement.getNextIdReservationDetail() ) );
-        reservationDetailListManagement.addReservationDetail( newReservationDetail );
+        DepartureSummary depSummary = departureDetailListManagement.getDepartures().get(departureIdentifier.getId());
+        ReservationDetail newReservationDetail = new ReservationDetail(depSummary.getDepartureTime(), depSummary,
+                "Mark Johnson", passengersNb, numberOfResidents,
+                carsNumber, numberOfLorries, numberOfHeavyMachinery,
+                price, Math.toIntExact(reservationDetailListManagement.getNextIdReservationDetail()));
+        reservationDetailListManagement.addReservationDetail(newReservationDetail);
 
         return newReservationDetail;
     }
 
     @Override
-    public ReservationSummary updateReservation( ReservationIdentifier reservationIdentifier,
+    public ReservationSummary updateReservation(ReservationIdentifier reservationIdentifier,
             DepartureIdentifier departureIdentifier, int passengersNb, int numberOfResidents, boolean car,
             int numberOfHeavyMachinery, int numberOfLorries, String customerName) {
         Date departureDate = null;
@@ -141,37 +113,37 @@ public class DummyCustomerBackend implements CustomerInterface { //should implem
 //        LineSummary lineSummary = null;
         DepartureSummary depSummary = null;
 
-        for ( int l : departureDetailListManagement.getDepartures().keySet() ) {
-            if ( Math.toIntExact( l ) == departureIdentifier.getId() ) {
+        for (int l : departureDetailListManagement.getDepartures().keySet()) {
+            if (Math.toIntExact(l) == departureIdentifier.getId()) {
 //                lineSummary = departureDetailListManagement.getDepartures().get( l ).getLineSummary();
 //                departurePort = lineSummary.getDeparturePort();
 //                destinationPort= lineSummary.getDestinationPort();
-                departureDate = departureDetailListManagement.getDepartures().get( l ).getDepartureTime();
-                depSummary = departureDetailListManagement.getDepartures().get( l );
+                departureDate = departureDetailListManagement.getDepartures().get(l).getDepartureTime();
+                depSummary = departureDetailListManagement.getDepartures().get(l);
             }
         }
 
-        for ( Long l : reservationDetailListManagement.getReservationDetails().keySet() ) {
-            if ( Math.toIntExact( l ) == reservationIdentifier.getId() ) {
+        for (Long l : reservationDetailListManagement.getReservationDetails().keySet()) {
+            if (Math.toIntExact(l) == reservationIdentifier.getId()) {
                 reservationDetailListManagement.getReservationDetails().replace(
-                        l, new ReservationDetail( departureDate,
-                                                  depSummary, "edited customer",
-                                                  passengersNb, numberOfResidents,
-                                                  reservationDetailListManagement.getReservationDetails().get( l ).getNumberOfCars(),
-                                                  reservationDetailListManagement.getReservationDetails().get( l ).getNumberOfLorries(), 40,
-                                                  50 * passengersNb + 25 * numberOfResidents,
-                                                  reservationIdentifier.getId() ) );
-                return reservationDetailListManagement.getReservationDetails().get( l );
+                        l, new ReservationDetail(departureDate,
+                                depSummary, "edited customer",
+                                passengersNb, numberOfResidents,
+                                reservationDetailListManagement.getReservationDetails().get(l).getNumberOfCars(),
+                                reservationDetailListManagement.getReservationDetails().get(l).getNumberOfLorries(), 40,
+                                50 * passengersNb + 25 * numberOfResidents,
+                                reservationIdentifier.getId()));
+                return reservationDetailListManagement.getReservationDetails().get(l);
             }
         }
         return null;
     }
 
     @Override
-    public Boolean deleteReservation( ReservationIdentifier reservationIdentifier ) {
-        for ( Long l : reservationDetailListManagement.getReservationDetails().keySet() ) {
-            if ( Math.toIntExact( l ) == reservationIdentifier.getId() ) {
-                reservationDetailListManagement.removeReservationDetail( l );
+    public Boolean deleteReservation(ReservationIdentifier reservationIdentifier) {
+        for (Long l : reservationDetailListManagement.getReservationDetails().keySet()) {
+            if (Math.toIntExact(l) == reservationIdentifier.getId()) {
+                reservationDetailListManagement.removeReservationDetail(l);
                 return true;
             }
         }
