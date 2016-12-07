@@ -95,7 +95,7 @@ public class DummyCustomerBackend implements CustomerInterface { //should implem
                 + depDetail.getPricePerResident() * numberOfResidents;
         DepartureSummary depSummary = departureDetailListManagement.getDepartures().get(departureIdentifier.getId());
         ReservationDetail newReservationDetail = new ReservationDetail(depSummary.getDepartureTime(), depSummary,
-                "Mark Johnson", passengersNb, numberOfResidents,
+                customerName, passengersNb, numberOfResidents,
                 carsNumber, numberOfLorries, numberOfHeavyMachinery,
                 price, Math.toIntExact(reservationDetailListManagement.getNextIdReservationDetail()));
         reservationDetailListManagement.addReservationDetail(newReservationDetail);
