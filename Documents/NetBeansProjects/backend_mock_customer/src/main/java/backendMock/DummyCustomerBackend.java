@@ -14,7 +14,7 @@ public class DummyCustomerBackend implements CustomerInterface { //should implem
 
     public DepartureDetailListManagement departureDetailListManagement;
     public LineSummaryListManagement lineSummarylListManagement;
-    public static ReservationDetailListManagement reservationDetailListManagement;
+    public ReservationDetailListManagement reservationDetailListManagement;
 
     public DummyCustomerBackend() {
         departureDetailListManagement = new DepartureDetailListManagement();
@@ -82,7 +82,7 @@ public class DummyCustomerBackend implements CustomerInterface { //should implem
     }
 
     @Override
-    public ReservationSummary saveReservation(DepartureIdentifier departureIdentifier, int passengersNb,
+    public ReservationDetail saveReservation(DepartureIdentifier departureIdentifier, int passengersNb,
             int numberOfResidents, boolean car, int numberOfHeavyMachinery, int numberOfLorries, String customerName) {
         int carsNumber = 0;
         if (car == true) {

@@ -48,7 +48,7 @@
         <dependency>
             <groupId>B</groupId>
             <artifactId>FerryProjectContract</artifactId>
-            <version>1.0-20161130.105031-6</version>
+            <version>1.0-20161206.222325-7</version>
         </dependency>
     </dependencies>
     <build>
