@@ -50,7 +50,19 @@
             <artifactId>FerryProjectContract</artifactId>
             <version>1.0-20161206.222325-7</version>
         </dependency>
+        <dependency>
+            <groupId>com.what</groupId>
+            <artifactId>ContractTest</artifactId>
+            <type>test-jar</type>
+            <scope>test</scope>
+            <version>[1.0-SNAPSHOT,)</version>
+            <classifier>tests</classifier>
+
+        </dependency>
+
     </dependencies>
+    
+
     <build>
         <plugins>
             <plugin>
